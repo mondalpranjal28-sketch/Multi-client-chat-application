@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NodeChat - Assignment 3</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <section id="loginPanel" class="login-card">
+      <div class="brand">
+        <div class="brand-icon">N</div>
+        <div>
+          <h1>NodeChat</h1>
+          <p>Multi-client chat application</p>
+        </div>
+      </div>
+
+      <div class="assignment-note">
+        <strong>Assignment 3</strong>
+        <span>Node.js + Express + Socket.IO + Gemini API</span>
+      </div>
+
+      <label>Username</label>
+      <input id="usernameInput" maxlength="24" placeholder="e.g. Alice" />
+
+      <label>Initial chatroom</label>
+      <input id="roomInput" maxlength="32" value="General" placeholder="General" />
+
+      <button id="connectBtn" class="primary">Connect to Chat</button>
+      <p id="loginError" class="error"></p>
+
+      <div class="feature-list">
+        <span>✓ Multi-client rooms</span>
+        <span>✓ One-to-one messaging</span>
+        <span>✓ Image/video sharing</span>
+        <span>✓ Gemini trolling detection</span>
+        <span>✓ OTP confirmation alert</span>
+      </div>
+    </section>
+
+    <section id="chatPanel" class="chat-layout hidden">
+      <aside class="sidebar">
+        <div class="sidebar-brand">
+          <div class="brand-icon small">N</div>
+          <div>
+            <strong>NodeChat</strong>
+            <small id="connectionStatus">Connected</small>
+          </div>
+        </div>
+
+        <div class="profile-box">
+          <span class="avatar" id="myAvatar">?</span>
+          <div>
+            <strong id="myName">User</strong>
+            <small id="myRoom">#General</small>
+          </div>
+        </div>
+
+        <div class="side-section">
+          <div class="section-title">CHATROOMS</div>
+          <div class="room-row">
+            <input id="roomChangeInput" placeholder="Room name" />
+            <button id="joinRoomBtn" title="Join room">+</button>
+          </div>
+          <div id="roomList"></div>
+        </div>
+
+        <div class="side-section users-section">
+          <div class="section-title">ONLINE CLIENTS <span id="onlineCount">0</span></div>
+          <div id="userList"></div>
+        </div>
+
+        <div class="sidebar-footer">
+          <span id="geminiBadge">Gemini: checking…</span>
+          <button id="disconnectBtn" class="danger-outline">Disconnect</button>
+        </div>
+      </aside>
+
+      <section class="conversation">
+        <header class="chat-header">
+          <div>
+            <h2 id="chatTitle">#General</h2>
+            <p id="chatSubtitle">Room chat</p>
+          </div>
+          <div class="header-badge">SOCKET.IO</div>
+        </header>
+
+        <div id="messages" class="messages"></div>
+        <div id="typingIndicator" class="typing"></div>
+
+        <form id="messageForm" class="composer">
+          <input type="file" id="mediaInput" accept="image/*,video/*" hidden />
+          <button type="button" id="mediaBtn" class="icon-btn" title="Send image/video">📎</button>
+          <input id="messageInput" autocomplete="off" placeholder="Type a message…" maxlength="2000" />
+          <button type="submit" class="send-btn">Send</button>
+        </form>
+        <div id="uploadStatus" class="upload-status"></div>
+      </section>
+    </section>
+  </main>
+
+  <div id="confirmationModal" class="modal hidden">
+    <div class="modal-card">
+      <div class="warning-icon">!</div>
+      <h3>Private information detected</h3>
+      <p id="confirmationText"></p>
+      <div class="modal-actions">
+        <button id="cancelSendBtn" class="secondary">Cancel</button>
+        <button id="confirmSendBtn" class="primary">Yes, send to group</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
